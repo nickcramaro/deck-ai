@@ -1,0 +1,14 @@
+*.log
+*.out
+*.pid
+*.gz
+*.swp
+.env
+node_modules
+.pnpm-store
+.idea
+.DS_Store
+Thumbs.db
+dist/
+__pycache__/
+out/
