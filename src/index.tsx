@@ -12,7 +12,7 @@ import {
   definePlugin,
   toaster,
 } from "@decky/api";
-import { useState, useEffect, useRef, useCallback, type VFC } from "react";
+import { useState, useEffect, useRef, useCallback, type FC } from "react";
 import { FaRobot, FaCamera, FaPaperPlane } from "react-icons/fa";
 
 // ── Backend callables ────────────────────────────────────────────
@@ -21,8 +21,6 @@ const askClaude = callable<[question: string, include_screenshot: boolean], void
 const setGame = callable<[game_name: string, app_id: number], boolean>("set_game");
 const clearGame = callable<[], boolean>("clear_game");
 const getStatus = callable<[], { session_active: boolean; current_game: string | null; current_app_id: number | null }>("get_status");
-const captureScreenshot = callable<[], string>("capture_screenshot");
-
 // ── Types ────────────────────────────────────────────────────────
 
 interface Message {
@@ -33,7 +31,7 @@ interface Message {
 
 // ── Chat Panel ───────────────────────────────────────────────────
 
-const ChatPanel: VFC = () => {
+const ChatPanel: FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -237,10 +235,6 @@ const ChatPanel: VFC = () => {
             <ButtonItem
               layout="below"
               onClick={() => setAttachScreenshot(!attachScreenshot)}
-              style={{
-                flex: 1,
-                backgroundColor: attachScreenshot ? "#1a6a1a" : undefined,
-              }}
               disabled={isLoading}
             >
               <FaCamera style={{ marginRight: "6px" }} />
@@ -249,7 +243,6 @@ const ChatPanel: VFC = () => {
             <ButtonItem
               layout="below"
               onClick={handleSend}
-              style={{ flex: 1 }}
               disabled={isLoading || !input.trim()}
             >
               <FaPaperPlane style={{ marginRight: "6px" }} />
